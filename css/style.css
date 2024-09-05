@@ -73,7 +73,7 @@ header {
 .btn-header {
     background-color: var(--clr-green);
     padding: .5rem;
-    border-radius: 100vmax;
+    border-radius: 1vmax;
     cursor: pointer;
     text-transform: uppercase;
     font-weight: 600;
