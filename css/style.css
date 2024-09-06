@@ -2,7 +2,7 @@
 
 :root {
     --clr-black: #ffffff;
-    --clr-green: #26774f;
+    --clr-green: #3fa885;
     --clr-white: #f7f7f7;
 
     --type-normal: #A8A878;
@@ -287,4 +287,30 @@ main {
 .fairy {
     background-color: var(--type-fairy);
     color: var(--clr-black);
+}
+
+#busqueda input {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--clr-green);
+    border-radius: 50px;
+    background-color: var(--clr-white);
+    color: var(--clr-green);
+    font-size: 1.15rem;
+    font-weight: 600;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+    
+#busqueda input:focus {
+    outline: none;
+    border-color: var(--clr-green);
+    box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.2);
+}
+
+#busqueda input::placeholder {
+    color: var(--clr-green);
+    font-weight: 600;
 }

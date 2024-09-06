@@ -1,12 +1,21 @@
 const listaPokemon = document.querySelector("#listaPokemon");
 const botonesHeader = document.querySelectorAll(".btn-header");
+const buscador = document.querySelector("#searchInput");
+let allPokemon = [];
 let URL = "https://pokeapi.co/api/v2/pokemon/";
+
+// Cargar los pokemones
 
 for (let i = 1; i <= 151; i++) {
     fetch(URL + i)
         .then((response) => response.json())
-        .then(data => mostrarPokemon(data))
+        .then(data => {
+            allPokemon.push(data);
+            mostrarPokemon(data);
+        });
 }
+
+// Mostrar pokemones
 
 function mostrarPokemon(poke) {
 
@@ -19,7 +28,6 @@ function mostrarPokemon(poke) {
     } else if (pokeId.length === 2) {
         pokeId = "0" + pokeId;
     }
-
 
     const div = document.createElement("div");
     div.classList.add("pokemon");
@@ -45,24 +53,35 @@ function mostrarPokemon(poke) {
     listaPokemon.append(div);
 }
 
+// Filtrar los pokemones por tipo
+
 botonesHeader.forEach(boton => boton.addEventListener("click", (event) => {
     const botonId = event.currentTarget.id;
 
-    listaPokemon.innerHTML = ""
+    listaPokemon.innerHTML = "";
 
-    for (let i = 1; i <= 151; i++) {
-        fetch(URL + i)
-            .then((response) => response.json())
-            .then(data => {
-
-                if (botonId === "ver-todos") {
-                    mostrarPokemon(data)
-                } else {
-                    const tipos = data.types.map(type => type.type.name);
-                    if (tipos.some(tipo => tipo.includes(botonId))) {
-                    mostrarPokemon(data)
-                    }
-                }
-            })
-    }
+    allPokemon.forEach(data => {
+        if (botonId === "ver-todos") {
+            mostrarPokemon(data);
+        } else {
+            const tipos = data.types.map(type => type.type.name);
+            if (tipos.some(tipo => tipo.includes(botonId))) {
+                mostrarPokemon(data);
+            }
+        }
+    });
 }));
+
+// Filtrar los pokemones por nombre
+
+buscador.addEventListener("input", () => {
+    const terminoIngresado = buscador.value.toLowerCase();
+
+    listaPokemon.innerHTML = "";
+
+    allPokemon.forEach(poke => {
+        if (poke.name.toLowerCase().includes(terminoIngresado)) {
+            mostrarPokemon(poke);
+        }
+    });
+});
